@@ -8,7 +8,7 @@ libraryDependencies += "org.apache.spark" % "spark-core_2.11" % "2.0.0" % "provi
 
 libraryDependencies += "org.apache.spark" % "spark-sql_2.11" % "2.0.0" % "provided"
 
-libraryDependencies += "org.apache.spark" % "spark-sql_2.11" % "2.0.0" % "provided"
+libraryDependencies += "org.apache.spark" % "spark-catalyst_2.11" % "2.0.0" % "provided"
 
 libraryDependencies += "org.apache.parquet" % "parquet-hadoop" % "1.8.3-SNAPSHOT-POLYU" % "provided"
 
