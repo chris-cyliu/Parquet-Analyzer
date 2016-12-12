@@ -22,11 +22,10 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.column.ColumnDescriptor;
 import org.apache.parquet.io.api.Binary;
 import org.apache.parquet.io.api.RecordConsumer;
-import org.spark_project.guava.collect.Multiset;
 import org.apache.parquet.hadoop.api.WriteSupport;
 import org.apache.parquet.schema.MessageType;
 
-public class MuliSetWriteSupport extends WriteSupport<Multiset<Object>> {
+public class MuliSetWriteSupport extends WriteSupport<CountSet> {
   MessageType schema;
   RecordConsumer recordConsumer;
   List<ColumnDescriptor> cols;
@@ -48,11 +47,16 @@ public class MuliSetWriteSupport extends WriteSupport<Multiset<Object>> {
   }
 
   @Override
-  public void write(Multiset<Object> values) {
-    for(Object value : values.elementSet()){
+  public void write(CountSet cs) {
+    for(String value : cs.valueSetJava()){
+      long count = cs.count(value);
       recordConsumer.startMessage();
+      recordConsumer.startField("value",0);
       recordConsumer.addBinary(stringToBinary(value.toString()));
-      recordConsumer.addLong(values.count(value));
+      recordConsumer.endField("value",0);
+      recordConsumer.startField("count",1);
+      recordConsumer.addLong(count);
+      recordConsumer.endField("count",1);
       recordConsumer.endMessage();
     }
   }

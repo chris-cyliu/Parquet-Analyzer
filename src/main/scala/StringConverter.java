@@ -1,6 +1,6 @@
 import org.apache.parquet.io.api.Binary;
 
-public class StringConverter extends MultiSetConverter<String>  {
+public class StringConverter extends CountSetConverter {
 
   public StringConverter(String columnName){
     super(columnName);

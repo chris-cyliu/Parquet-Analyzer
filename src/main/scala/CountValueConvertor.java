@@ -17,15 +17,11 @@
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
-import org.apache.parquet.io.api.Binary;
 import org.apache.parquet.io.api.Converter;
 import org.apache.parquet.io.api.GroupConverter;
-import org.apache.parquet.io.api.PrimitiveConverter;
 import org.apache.parquet.schema.GroupType;
 import org.apache.parquet.schema.OriginalType;
 import org.apache.parquet.schema.Type;
-import org.spark_project.guava.collect.HashMultiset;
-import org.spark_project.guava.collect.Multiset;
 
 
 public class CountValueConvertor extends GroupConverter {
@@ -61,7 +57,7 @@ public class CountValueConvertor extends GroupConverter {
           case ENUM: break;
         }
       }
-      return new MultiSetConverter(field.getName());
+      return new CountSetConverter(field.getName());
     }
 
     throw new UnknownError();
