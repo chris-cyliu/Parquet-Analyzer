@@ -32,7 +32,7 @@ object ParquetAnalyzer {
     val parquetFilesUri = args(0)
     val outputFilesUri = args(1)
 
-    val spark = SparkSession.builder().master("local[4]").getOrCreate()
+    val spark = SparkSession.builder().getOrCreate()
 
     //Hadoop read all parquet file
     val fs = FileSystem.get(spark.sparkContext.hadoopConfiguration)
@@ -59,7 +59,7 @@ object ParquetAnalyzer {
       val fileName = parquetReader.getPath.getName
       var rowGroupCount = 0
 
-      while((pageReadStore = parquetReader.readNextRowGroup()) != null ) {
+      while({pageReadStore = parquetReader.readNextRowGroup(); pageReadStore != null}) {
 
         //Start process a row group
         val columnConverters = new CountValueConvertor(parquetReader.getFileMetaData.getSchema)
